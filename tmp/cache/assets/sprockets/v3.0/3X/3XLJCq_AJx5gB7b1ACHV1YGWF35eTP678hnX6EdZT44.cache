@@ -1,0 +1,41 @@
+I"Õ(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  this.PurchaseButton = (function(superClass) {
+    extend(PurchaseButton, superClass);
+
+    function PurchaseButton() {
+      return PurchaseButton.__super__.constructor.apply(this, arguments);
+    }
+
+    PurchaseButton.prototype.handleError = function() {
+      return console.error("Error");
+    };
+
+    PurchaseButton.prototype.handleSuccess = function() {
+      return console.log("success");
+    };
+
+    PurchaseButton.prototype.purchase = function() {
+      return $.ajax({
+        url: '/purchases',
+        method: 'POST',
+        data: {
+          products: this.props.items
+        },
+        success: this.handleSuccess,
+        error: this.handleError
+      });
+    };
+
+    PurchaseButton.prototype.render = function() {
+      return <button onClick={this.purchase} className='purchase_btn'>Purchase!</button>;
+    };
+
+    return PurchaseButton;
+
+  })(React.Component);
+
+}).call(this);
+:ET

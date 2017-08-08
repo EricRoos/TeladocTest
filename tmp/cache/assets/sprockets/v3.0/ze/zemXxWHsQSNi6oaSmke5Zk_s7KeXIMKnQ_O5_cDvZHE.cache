@@ -1,0 +1,53 @@
+I"(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  this.Purchaser = (function(superClass) {
+    extend(Purchaser, superClass);
+
+    function Purchaser(props) {
+      this.state = {
+        purchase: void 0,
+        quantities: {}
+      };
+    }
+
+    Purchaser.prototype.handleQtyUpdate = function(data) {
+      var quantities;
+      quantities = this.state.quantities;
+      quantites[data.id] = data;
+      return this.setState({
+        quantities: quantities
+      });
+    };
+
+    Purchaser.prototype.renderProduct = function(product) {
+      return <ProductSelector product={product} key={product.id} notify={this.handleQtyUpdate.bind(this)}/>;
+    };
+
+    Purchaser.prototype.renderProductSelection = function() {
+      return <div className='products' >
+      {this.props.products.map(this.renderProduct.bind(this))}
+    </div>;
+    };
+
+    Purchaser.prototype.renderSection = function() {
+      if (this.state.purchase != null) {
+        return this.renderPurchaseConfirmation();
+      } else {
+        return this.renderProductSelection();
+      }
+    };
+
+    Purchaser.prototype.render = function() {
+      return <div className='purchase_section'>
+      {this.renderSection()}
+    </div>;
+    };
+
+    return Purchaser;
+
+  })(React.Component);
+
+}).call(this);
+:ET

@@ -1,0 +1,72 @@
+I"%	(function() {
+  var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  this.PurchaseButton = (function(superClass) {
+    extend(PurchaseButton, superClass);
+
+    function PurchaseButton(props) {
+      this.purchase = bind(this.purchase, this);
+      this.setSendingRequest = bind(this.setSendingRequest, this);
+      this.handleSuccess = bind(this.handleSuccess, this);
+      this.handleError = bind(this.handleError, this);
+      this.state = {
+        sendingRequest: false
+      };
+    }
+
+    PurchaseButton.prototype.handleError = function() {
+      console.log(this);
+      return this.setSendingRequest(false, (function(_this) {
+        return function() {
+          console.log(_this);
+          return _this.props.notifyOfError("something wen't wrong");
+        };
+      })(this));
+    };
+
+    PurchaseButton.prototype.handleSuccess = function(data) {
+      return this.setSendingRequest(false, (function(_this) {
+        return function() {
+          return _this.props.setPurchase(data);
+        };
+      })(this));
+    };
+
+    PurchaseButton.prototype.setSendingRequest = function(flag, cb) {
+      return this.setState({
+        sendingRequest: flag
+      }, cb);
+    };
+
+    PurchaseButton.prototype.purchase = function() {
+      this.setSendingRequest(true);
+      return $.ajax({
+        url: '/purchases',
+        method: 'POST',
+        data: JSON.stringify({
+          products: this.props.items
+        }),
+        success: this.handleSuccess,
+        error: this.handleError,
+        dataType: 'json',
+        contentType: 'application/json'
+      });
+    };
+
+    PurchaseButton.prototype.render = function() {
+      var button_text;
+      button_text = "Purchase!";
+      if (this.state.sendingRequest) {
+        button_text = "processing...";
+      }
+      return <button disabled={this.state.sendingRequest} onClick={this.purchase.bind(this)} className='purchase_btn'>Purchase!</button>;
+    };
+
+    return PurchaseButton;
+
+  })(React.Component);
+
+}).call(this);
+:ET
