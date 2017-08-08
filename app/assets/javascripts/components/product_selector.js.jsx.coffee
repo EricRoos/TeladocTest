@@ -9,5 +9,5 @@ class @ProductSelector extends React.Component
     `<div className='product'>
       <label>{product.name} ({product.stock_value}) </label>
       <input type='hidden' name='productId' value={product.id} />
-      <input type='number' name='quantity' disabled={disabled} onChange={this.handleQuantityUpdate.bind(this)} />
+      <input type='number' min={0} max={product.stock_value} name='quantity' disabled={disabled} onChange={this.handleQuantityUpdate.bind(this)} />
     </div>`
