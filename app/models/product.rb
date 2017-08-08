@@ -5,4 +5,8 @@ class Product < ApplicationRecord
   # since its atomic inc. dev operations
   # are fast
   counter :stock
+
+  def stock_value
+    stock.value
+  end
 end

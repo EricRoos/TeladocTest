@@ -36,4 +36,4 @@ class @PurchaseButton extends React.Component
     button_text = "Purchase!"
     if this.state.sendingRequest
       button_text = "processing..."
-    `<button disabled={this.state.sendingRequest} onClick={this.purchase.bind(this)} className='purchase_btn'>Purchase!</button>`
+    `<button disabled={this.state.sendingRequest} onClick={this.purchase.bind(this)} className='button purchase_btn'>Purchase!</button>`
