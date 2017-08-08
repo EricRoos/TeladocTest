@@ -1,4 +1,5 @@
 class PurchasesController < ApplicationController
+  before_action :ensure_approved
   def create
     products = params.require(:products)
 
