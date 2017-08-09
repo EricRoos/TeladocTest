@@ -15,13 +15,6 @@ class @Purchaser extends React.Component
   renderProduct: (product) ->
     `<ProductSelector product={product} key={product.id} notify={this.handleQtyUpdate.bind(this)}/>`
 
-  renderProductSelection: ->
-    `<div className='products' >
-      {this.props.products.map(this.renderProduct.bind(this))}
-    </div>`
-
-  renderSection: ->
-  
   notifyOfError: (msg)=>
     @setState
       message: msg
@@ -38,7 +31,9 @@ class @Purchaser extends React.Component
       </div>`
     else
       `<div className='purchase_section'>
-        {this.renderProductSelection()}
+        <div className='products' >
+          {this.props.products.map(this.renderProduct.bind(this))}
+        </div>
         <div className='message'>{this.state.message}</div>
         <PurchaseButton setPurchase={this.setPurchase} notifyOfError={this.notifyOfError} items={Object.values(this.state.quantities)} />
       </div>`
