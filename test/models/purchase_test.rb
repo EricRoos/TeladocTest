@@ -9,10 +9,6 @@ class PurchaseTest < ActiveSupport::TestCase
   end
 
   test "creating all products with quantity" do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
-    puts "Env: #{Rails.env}"
-    Rails.logger.debug "Env: #{Rails.env}"
     p1 = Product.create(name: "test 1")
     p2 = Product.create(name: "test 2")
   
