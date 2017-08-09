@@ -4,9 +4,7 @@ class @PurchaseButton extends React.Component
       sendingRequest: false
 
   handleError: =>
-    console.log @
     @setSendingRequest(false, () =>
-      console.log @
       this.props.notifyOfError("something wen't wrong")
     )
 
